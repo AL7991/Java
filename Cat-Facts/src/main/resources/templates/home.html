@@ -1,0 +1,30 @@
+
+<html>
+    <head>
+<link rel="stylesheet" href="style.css">
+<script src="https://kit.fontawesome.com/7f46eb45ab.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+    
+        <div class="container">
+        <h1 >Cat Facts<i class="fa-solid fa-paw"></i></h1>
+        <div class="forImage"></div>
+        <div class="forText" th:text="${text}"></div>
+        <div class="nextButton"><span class="button">Next</span></div>
+        </div>
+	<script > 
+	const picture = document.querySelector(".forImage");
+	const button = document.querySelector(".button");
+	
+	picture.innerHTML += '<img src="[[${img}]]"></img>';
+	
+	button.addEventListener("click",refresh);
+
+	function refresh()
+	{
+	    location.reload();
+	}
+	
+	</script>
+    </body>
+</html>
