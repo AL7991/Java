@@ -1,0 +1,112 @@
+@import 
+url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
+
+*
+{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Lora', serif;
+    font-weight: 500;
+}
+.container
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+background-image: linear-gradient( rgba(0,0,0,0.7) , rgba(0,0,0,0.7)) , url(img/pexels-jonathan-borba-2983101.jpg);
+background-repeat: no-repeat;
+width: 100vw;
+height: 100%;
+background-size: cover;
+background-position: right;
+}
+
+.forLogo
+{
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: calc(100vw - 2rem);
+    margin-left: 2rem;
+    height: 250px;
+}
+
+.logo{
+    width: 250px;
+    height: 250px;
+}
+
+.loginForm{
+    padding: 70px 80px;
+    background:linear-gradient(120deg , rgba(255, 255, 255, 0.9) , rgba(255, 255, 255, 0.7));
+    border-radius: 30px;
+    box-shadow: 0px 0px 40px 20px rgb(0 , 0 , 0);
+}
+
+h1
+{
+    display: block;
+    text-align: center;
+    border-bottom: 1px solid silver;
+    padding-bottom: 25px;
+    font-family: 'Lora', serif;
+}
+
+.newMember{
+    display: block;
+    padding: 10px;
+}
+
+form .forInput{
+    position: relative;
+    border-bottom: 2px solid black;
+    margin:  30px 0;
+}
+
+.forInput input{
+    width:100%;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.forInput label{
+    position: absolute;
+    top:50%;
+    left: 5px;
+    color: black;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.forInput input:focus ~ label ,
+.forInput input:valid ~ label
+ {
+    top: -5px;
+    color: grey;
+}
+
+.sign-in{
+    display: block;
+    margin-top: 40px;
+    padding: 15px 50px;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    transition: .5s ease;
+    font-size: 1rem;
+    font-family: 'Lora', serif;
+}
+.sign-in:hover{
+    background-color: rgb(216, 215, 215);
+    color: black;
+}

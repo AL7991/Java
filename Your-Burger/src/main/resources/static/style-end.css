@@ -1,0 +1,368 @@
+
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.mainContainer
+{
+    width: 100vw;
+    min-height: 100vh;
+    background-image: url(img/pexels-katerina-holmes-5908060.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position:center;
+    margin: 0;
+}
+
+.forLogo
+{
+    display: flex;
+    width: 100vw;
+    height: 16vh;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+.logo
+{
+    width: 250px;
+    height: 250px;
+}
+
+.logOutButton
+{
+    height: 6vh;
+    width: 100vw;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.btnLogOut{
+    padding: .6rem;
+    width: 6rem;
+    margin-right: 2rem;
+    border-radius: 1rem;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.911); 
+    cursor: pointer;
+    transition: all 1s ease;
+}
+.btnLogOut:hover{
+    background-color: white;
+    color: black;
+}
+
+.boxContainer{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    min-height: 70vh;
+    width: 100vw;
+}
+
+.leftBox , .rightBox{
+    margin: 30px;
+    width: 800px;
+    height: 600px;
+    padding: 20px;
+    background:linear-gradient(120deg , rgba(255, 255, 255, 0.9) , rgba(255, 255, 255, 0.7));
+    box-shadow: 0px 0px 40px 5px rgb(0 , 0 , 0);
+    border-radius: 20px;
+}
+
+.firstBox , .secondBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.map{
+    width: 75%;
+    height: 50%;
+    border-radius: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    border: 1px solid black;
+}
+
+.deliveryIcons{
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 30%;
+    color: black;
+    text-align: center;
+
+}
+
+.firstIcon i , .secondIcon i , .thirdIcon i{
+    padding: 40px;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.495);
+    border: 1px solid grey;
+    border-radius: 50%;
+    display: block;
+    margin: auto;
+    margin-bottom: 10px;
+    font-size: 23px;
+}
+
+.secondIcon  , .thirdIcon {
+    opacity: 0.3;
+}
+
+span{
+    display: block;
+}
+
+.animatedBar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 20%;
+
+}
+
+.progress-bar {
+    height: 45px;
+    width: 520px;
+    margin: 50px auto;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
+    background-size: 30px 30px;
+    background-image: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, .15) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, .15) 50%,
+        rgba(255, 255, 255, .15) 75%,
+        transparent 75%,
+        transparent
+    );
+  animation: animationStripes 1.25s linear infinite;
+}
+
+@keyframes animationStripes {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 60px 0;
+    }
+}
+.progressBarSpan {
+  display: block;
+  height: 45px;
+  width: 0%;
+  background-color: #34c3e3c5;
+  border-radius: 3px;
+  position: relative;
+  animation: progress 900s linear forwards ;
+}
+
+@keyframes progress {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+.thanks{
+    height: 10%;
+    font-size: 80px;
+    text-align: center;
+}
+
+.thanksText{
+    height: 30%;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+a:any-link{
+    text-decoration: none;
+    color: rgb(39, 39, 255);
+}
+
+a:hover{
+    color:rgba(39, 39, 255, 0.463) ;
+}
+
+.or{
+    height: 5%;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.visitText{
+    height: 25%;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.socialMedia{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.socialMedia i {
+    opacity: 0.9;
+    padding: 50px;
+    font-size: 30px;
+    color: white;
+    border-radius: 10%;
+    border: 1px solid grey;
+}
+
+.socialMedia i:hover{
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.fa-instagram{
+    background-image: linear-gradient(120deg,blue,purple,red,yellow); 
+}
+
+.fa-facebook-f{
+    background-color: blue;
+}
+
+.fa-twitter{
+    background-color: #34c2e3;
+}
+
+.fa-youtube{
+    background-color: red;
+}
+
+
+
+
+@media screen and (max-width:855px) {
+    
+    .leftBox , .rightBox{
+        width: 600px;
+        height: 500px;
+    }
+    .leftBox , .rightBox{
+        margin: 15px;
+    }
+
+    .progress-bar{
+        width: 380px;
+    }
+    
+    .firstIcon i , .secondIcon i , .thirdIcon i{
+        padding: 25px;
+        width: 80px;
+        height: 80px;
+    }
+
+    .socialMedia i{
+        padding: 40px;
+    }
+    .thanks{
+        font-size: 60px;
+    }
+    
+    .socialMeciaText{
+        font-size: 40px;
+    }
+
+
+}
+
+
+@media screen and (max-width:662px) {
+    
+    .leftBox , .rightBox{
+        width: 400px;
+        height: 400px;
+    }
+
+    .leftBox , .rightBox{
+        margin: 5px;
+    }
+
+    .progress-bar{
+        width: 245px;
+    }
+    .deliveryIcons span{
+        font-size: 12px;
+    }
+
+    .firstIcon i , .secondIcon i , .thirdIcon i{
+        padding: 20px;
+        width: 60px;
+        height: 60px;
+        font-size: 20px;
+    }
+
+    .socialMedia i{
+        padding: 20px;
+    }
+    .thanks{
+        font-size: 40px;
+    }
+    
+    .socialMeciaText{
+        font-size: 20px;
+    }
+
+}
+
+
+@media screen and (max-width:411px) {
+    
+    .leftBox , .rightBox{
+        width: 250px;
+        height: 400px;
+    }
+
+    .progress-bar{
+        width: 155px;
+    }
+
+    .deliveryIcons span{
+        font-size: 11px;
+    }
+
+    .firstIcon i , .secondIcon i , .thirdIcon i{
+        padding: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 15px;
+    }
+    .socialMedia i{
+        padding: 10px;
+    }
+
+    .thanks{
+        font-size: 30px;
+    }
+    
+    .socialMeciaText{
+        font-size: 15px;
+    }
+
+}
+
+

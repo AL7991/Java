@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" href="style-design.css"
+	th:href="@{/style-design.css}" rel="stylesheet" media="screen" />
+    <title>Your Burger</title>
+</head>
+<body>
+        <div class="container">
+			<main>
+            <div class="forLogo">
+                <img class="logo" th:src="@{/img/logo_transparent.png}" src="img/logo_transparent.png" alt="logo">
+            </div>
+			<aside>
+		<form method="POST" th:action="@{/logout}" class="logOutButton" >
+		<button class="btnLogOut" type="submit">LogOut</button>
+		</form>
+			</aside>
+
+
+			<article>
+			<form class="forBoxes" method="POST" th:object="${design}">
+
+            <section class="box1">
+                <h2 >Choose the type of bun:</h2>
+                <div class="ingredient" th:each="ingredient : ${wrap}">
+                <label>
+                <input name="ingredients" type="checkbox" th:value="${ingredient.Id}" />
+                <span th:text="${ingredient.name}">Ingredient</span>
+                </label>
+                </div>
+            </section>
+            <section class="box2">
+                <h2>Choose meat:</h2>
+                <div class="ingredient" th:each="ingredient : ${protein}">
+                <label>
+                <input name="ingredients" type="checkbox" th:value="${ingredient.Id}" />
+                <span th:text="${ingredient.name}">Ingredient</span>
+                </label>
+                </div>
+            </section>
+            <section class="box3">
+                <h2>Choose cheese:</h2>
+                <div class="ingredient" th:each="ingredient : ${cheese}">
+                    <label>
+                <input name="ingredients" type="checkbox" th:value="${ingredient.Id}" />
+                <span th:text="${ingredient.name}">Ingredient</span>
+                </label>
+                </div>    
+            </section>
+            <section class="box4">
+                <h2>Choose vegetables:</h2>
+                <div class="ingredient" th:each="ingredient : ${veggies}">
+                    <label>
+                <input name="ingredients" type="checkbox" th:value="${ingredient.Id}" />
+                <span th:text="${ingredient.name}">Ingredient</span>
+                </label>
+                </div>
+            </section>
+            <section class="box5">
+                <h2>Choose sauce:</h2>
+                <div class="ingredient" th:each="ingredient : ${sauce}">
+                    <label>
+                <input name="ingredients" type="checkbox" th:value="${ingredient.Id}" />
+                <span th:text="${ingredient.name}">Ingredient</span>
+                </label>
+                </div>
+            </section>
+            <section class="box6">
+                <h2>Nazwa dla Burgera</h2>
+                <span  class="validationError" th:if="${#fields.hasErrors('burgerName')}" th:errors="*{burgerName}">Error</span>
+                <span  class="validationError" th:if="${#fields.hasErrors('ingredients')}" th:errors="*{ingredients}">Error</span>
+                <div class="ingredient">
+                <input class="BurgerName" name="ingredients" type="text" th:field="*{burgerName}"/>
+                </div>
+                <button class="SendBtn" type="submit">Wyślij</button>
+            </section>
+
+            </form>
+				</article>
+            
+			</main>
+        </div>   
+</body>
+</html>

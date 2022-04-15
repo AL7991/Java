@@ -1,0 +1,79 @@
+<html>
+    <head>
+    <link type="text/css" href="style-register.css"
+	th:href="@{/style-register.css}" rel="stylesheet" media="screen" />
+    <title>You'r Burger</title>
+
+    </head>
+    <body>
+        
+<main>
+
+    <div class="container">
+
+        <div class="forLogo">
+            <img class="logo" th:src="@{/img/logo_transparent.png}" src="img/logo_transparent.png" alt="logo">
+        </div>
+	
+		<article>
+		
+        <div class="forRegister">
+           
+            <form method="POST" th:action="@{/register}" id="registerForm">
+
+                <h1>Register</h1>
+    
+                <div class="forInput">
+                <input type="text" name="username" required>
+                <label>Username</label>
+                </div>
+                               
+                <div class="forInput">
+                <input type="password" name="password" required>
+                <label>Password</label>
+                </div>
+                                
+                <div class="forInput">
+                <input type="text" name="name" required>
+                <label>Name</label>
+                </div>
+                                
+                <div class="forInput">
+                <input type="text" name="street" required>
+                <label>Street</label>
+                </div>
+                           
+                <div class="forInput">
+                <input type="text" name="city" required>
+                <label>City</label>
+                </div>
+                          
+                <div class="forInput">
+                <input type="text" name="state" required>
+                <label>State</label>
+                </div>
+                
+                <div class="forInput">
+                <input type="text" name="zip" required>
+                <label>Zip code</label>
+                </div>
+               
+                <div class="forInput">
+                    <input type="text" name="phone" required>
+                    <label>Phone number</label>
+                </div>
+                    
+
+                <input type="submit" class="register" value="Register">
+                
+                </form>
+
+        </div>
+        
+        </article>
+
+    </div>  
+
+    </main>
+    </body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style-orderFrom.css" th:href="@{/style-orderFrom.css}" media="screen">
+    <title>Your Burger</title>
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" 
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" 
+    crossorigin="anonymous" 
+    referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <div class="container">
+
+		<main>
+
+        <div class="forLogo">
+            <img class="logo" th:src="@{/img/logo_transparent.png}" src="img/logo_transparent.png" alt="logo">
+        </div>
+        
+        <aside>
+        
+        <form method="POST" th:action="@{/logout}" class="logOutButton" >
+		<button class="btnLogOut" type="submit">LogOut</button>
+		</form>
+		
+		</aside>
+
+			<article>
+
+        <div class="orderData">
+            <form method="post" class="orderForm" th:action="@{/orders}" th:object="${order}">
+            
+            	<section>
+            
+                <h2>Delivery address</h3>
+
+                <div class="nextOrder">
+                    <a th:href="@{/design}" >Add To Order </a> <i class="fa-solid fa-burger"></i>
+                </div>
+                
+                    <div class="addressBox">
+                <span>Full name:</span>
+                
+                <input name="name" type="text" th:value="${user.Name}"/>
+                
+                <div class="validText">
+                    <span class="validationError" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</span>
+                </div>
+
+                <span>Street:</span>
+               
+                <input name="street" type="text" th:value="${user.Street}"/>
+                
+                <div class="validText">
+                    <span class="validationError" th:if="${#fields.hasErrors('street')}" th:errors="*{street}">Error</span>
+                </div>
+
+                <span>City:</span>
+                
+                <input name="city" type="text" th:value="${user.City}"/>
+               
+                <div class="validText">
+                    <span class="validationError" th:if="${#fields.hasErrors('city')}" th:errors="*{city}">Error</span>
+                </div>
+
+                <span>State:</span>
+                
+                <input name="state" type="text" th:value="${user.State}"/>
+                
+                <div class="validText">
+                    <span class="validationError" th:if="${#fields.hasErrors('state')}" th:errors="*{state}">Error</span>
+                </div>
+
+                <span>Zip code:</span>
+                
+                <input name="zip" type="text" th:value="${user.Zip}"/>
+                
+                <div class="validText">
+                    <span class="validationError" th:if="${#fields.hasErrors('zip')}" th:errors="*{zip}">Error</span>
+                </div>
+
+                    </div>
+
+					</section>
+					
+					<section>
+
+                <h2>Payment method</h3>
+
+                    <div class="paymentBox">
+
+                <span>Credit card number:</span>
+                
+                <input type="text" th:field="*{ccNumber}"/>
+                
+                <div class="validText"> 
+                    <span class="validationError" th:if="${#fields.hasErrors('ccNumber')}" th:errors="*{ccNumber}">Error</span>
+                </div>
+                
+                <span>Expiration date:</span>
+                
+                <input type="text" th:field="*{ccExpiration}"/>
+                
+                <div class="validText">
+                    <span class="validationError" th:if="${#fields.hasErrors('ccExpiration')}" th:errors="*{ccExpiration}">Error</span>
+                </div>
+                
+                <span>CVV:</span>
+               
+                <input type="text" th:field="*{ccCVV}"/>
+                
+                <div class="validText">
+                    <span class="validationError" th:if="${#fields.hasErrors('ccCVV')}" th:errors="*{ccCVV}">Error</span>
+                </div>
+
+                    </div>
+                    
+                    </section>
+                
+                <input type="submit" class="SendBtn" value="Submit"/>
+                
+                </form>
+
+        </div>
+        
+        </article>
+
+		</main>
+
+    </div>
+
+</body>
+</html>

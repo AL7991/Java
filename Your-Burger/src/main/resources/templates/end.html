@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" href="style-end.css"
+	th:href="@{/style-end.css}" rel="stylesheet" media="screen" />
+    <title>Your Burger</title>
+
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" 
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" 
+    crossorigin="anonymous" 
+    referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+    
+     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+</head>
+<body>
+<div class="mainContainer">
+    <header>
+    <div class="forLogo">
+        <img class="logo" th:src="@{/img/logo_transparent.png}" src="img/logo_transparent.png" alt="logo">
+    </div>
+    </header>
+    <main>
+        
+        <form method="POST" th:action="@{/logout}" class="logOutButton" >
+		<button class="btnLogOut" type="submit">LogOut</button>
+		</form>
+
+        <div class="boxContainer">
+
+            <div class="firstBox">
+
+        <article>
+            <div class="leftBox">
+                <div class="map" id="map"></div>
+                <div class="animatedBar">
+                    <div class="progress-bar">
+                        <span class="progressBarSpan"></span>
+                      </div>
+                </div>
+                <div class="deliveryIcons">
+                    <div class="firstIcon">
+                        <i class="fa-solid fa-hourglass"></i>
+                        <span>Preparation </span>
+                        <span>of the order</span>
+                    </div>
+                    <div id="secondIcon" class="secondIcon">
+                        <i class="fa-solid fa-car"></i>
+                        <span>Order</span>
+                        <span>on the way</span>
+
+                    </div>
+                    <div id="thirdIcon" class="thirdIcon"> 
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Enjoy</span>
+                        <span>your meal</span>
+                    </div>
+                </div>
+                
+
+            </div>
+        </article>
+
+            </div>
+
+            <div class="secondBox">
+
+        <article>          
+            <div class="rightBox">
+               <span class="thanks">Thanks,</span>
+               <span class="thanksText socialMeciaText">click<pre> </pre><a th:href="@{/design}">here</a><pre> </pre>to take another order.</span>
+               <span class="or socialMeciaText">Or</span>
+               <span class="visitText socialMeciaText">visit us on social media.</span>
+               <footer>
+                   <div class="socialMedia">
+                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-facebook-f"></i>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-youtube"></i>
+                   </div>
+               </footer>
+            </div>
+        </article>
+
+            </div>
+
+        </div>
+
+    </main>
+</div>
+
+<script th:inline="javascript">         
+	var map = L.map('map').setView([52.22, 21.01], 17);
+
+    
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    
+    L.marker([52.22 , 21.01]).addTo(map)
+    .bindPopup("YourBurger")
+    .openPopup();
+
+    let lat = [[${lat}]];
+    let lng = [[${lng}]];
+                
+        if(lat !== null || lng !== null ){
+          L.marker([lat , lng]).addTo(map)
+          .bindPopup("YourAddress")
+          .openPopup();
+          
+          var markerArray = [];
+          markerArray.push(L.marker([52.22 , 21.01]));
+          markerArray.push(L.marker([lat , lng]));
+          
+          var group = L.featureGroup(markerArray).addTo(map);
+          map.fitBounds(group.getBounds());
+          
+        }
+
+    const secondIcon = document.getElementById("secondIcon");
+    const thirdIcon = document.getElementById("thirdIcon");
+
+    setTimeout(changeSecondIcon, 450000);
+    setTimeout(changeThirdIcon, 900000);
+
+    function changeSecondIcon() {
+        secondIcon.style.opacity = "1";
+    }
+
+    function changeThirdIcon(){
+        thirdIcon.style.opacity = "1";
+    }
+
+    </script>
+
+</body>
+</html>

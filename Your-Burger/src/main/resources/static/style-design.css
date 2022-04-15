@@ -1,0 +1,287 @@
+@import 
+url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
+
+@import 
+url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
+
+@import 
+url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+}
+.container
+{
+    min-width: 100vw;
+    min-height: 100vh;
+    background-image: url(img/pexels-ron-lach-8880731.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 20% 65%;
+}
+
+.forLogo
+{
+    display: flex;
+    width: 100vw;
+    height: 16vh;
+    justify-content: flex-start;
+    align-items: center;
+}
+.logOutButton
+{
+    height: 4vh;
+    width: 100vw;
+    display: flex;
+    justify-content: end;
+}
+.btnLogOut{
+    width: 6rem;
+    margin-right: 2rem;
+    border-radius: 1rem;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.911); 
+    cursor: pointer;
+    transition: all 1s ease;
+}
+.btnLogOut:hover{
+    background-color: white;
+    color: black; 
+}
+.logo
+{
+    width: 250px;
+    height: 250px;
+}
+.forBoxes
+{
+ display: flex;
+ height: 80vh;
+ width: 100vw;
+ justify-content: space-evenly;
+ flex-wrap: wrap;
+ flex-direction: column;
+ align-content: space-between;
+}
+h2
+{
+    padding-bottom: 5px;
+    font-family: 'Lora', serif;
+
+}
+.ingredient{
+    padding-bottom: 5px;
+}
+
+
+.box1 , .box2 , .box3 , .box4 , .box5 , .box6
+{
+    text-align: center;
+    padding-top: 20px;
+    background:linear-gradient(120deg , rgba(255, 255, 255, 0.9) , rgba(255, 255, 255, 0.7));
+    box-shadow: 0px 0px 40px 5px rgb(0 , 0 , 0);
+    width: 300px;
+    min-width: 30%;
+    min-height: 25%;
+    margin: 25px;
+    border-radius: 30px;
+    color: white;
+}
+
+.box1 , .box2 , .box3{
+margin-left: 150px;
+}
+
+.box4 , .box5 , .box6{
+margin-right: 150px;
+}
+
+.box1{
+background: linear-gradient(to top , rgba(0,0,0,0.2) , rgba(0,0,0,0.2) ) , url(img/pexels-geraud-pfeiffer-6605786.jpg);
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+transition: all .5s ease-in-out;
+}
+
+.box1:hover{
+    background: url(img/pexels-geraud-pfeiffer-6605786.jpg); 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.box2{
+    background: linear-gradient(to top , rgba(0,0,0,0.2) , rgba(0,0,0,0.2) ) , url(img/pexels-алекке-блажин-7616677.jpg);
+    background-position: 0% 22%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all .5s ease-in-out;
+}
+
+.box2:hover{
+    background: url(img/pexels-алекке-блажин-7616677.jpg);
+    background-position: 0% 22%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.box3{
+    background: linear-gradient(to top , rgba(0,0,0,0.2) , rgba(0,0,0,0.2) ) , url(img/pexels-ron-lach-8880740.jpg);
+    background-position: 0% 82%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all .5s ease-in-out;
+}
+
+.box3:hover{
+    background: url(img/pexels-ron-lach-8880740.jpg);
+    background-position: 0% 82%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.box4{
+    background: linear-gradient(to top , rgba(0,0,0,0.2) , rgba(0,0,0,0.2) ) , url(img/pexels-photo-1199562.jpeg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all .5s ease-in-out;
+}
+
+.box4:hover{
+    background: url(img/pexels-photo-1199562.jpeg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.box5{
+    background: linear-gradient(to top , rgba(0,0,0,0.2) , rgba(0,0,0,0.2) ) , url(img/pexels-jonathan-borba-3622479.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all .5s ease-in-out;
+}
+
+.box5:hover{
+    background: url(img/pexels-jonathan-borba-3622479.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.box6{
+    max-height: 30%;
+    background: linear-gradient(to top , rgba(0,0,0,0.2) , rgba(0,0,0,0.2) ) , url(img/pexels-valeria-boltneva-1639557.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all .5s ease-in-out;
+}
+
+.box6:hover{
+    background: url(img/pexels-valeria-boltneva-1639557.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.ingredient{
+    padding: 12px;
+}
+
+.BurgerName{
+    width: 200px;
+    padding: 5px;
+    border-radius: 10px;
+    outline: none;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+.BurgerName:focus{
+    width: 280px;
+}
+
+.SendBtn{
+    padding: 10px;
+    width: 100px;
+    border-radius: 20px;
+    background-color: black;
+    color: white;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+
+.SendBtn:hover{
+background-color: white;
+color: black;
+}
+
+.validationError{
+	font-size: .8rem;
+	display: block;
+	padding: 0;
+	margin: 0;
+}
+
+
+
+@media screen and (max-width:1440px) {
+
+    .container{
+        background-position:center;
+    }
+}
+
+@media screen and (max-width:950px){
+    .box1 , .box2 , .box3{
+        margin-left: 50px;
+        }
+        
+        .box4 , .box5 , .box6{
+        margin-right: 50px;
+        }
+}
+
+@media screen and (max-width:704px) {
+
+    .box1 , .box2 , .box3{
+        margin-left: 0px;
+        }
+        
+        .box4 , .box5 , .box6{
+        margin-right: 0px;
+        }
+
+    .box1 , .box2 , .box3 , .box4 , .box5 , .box6{
+        padding: 0px;
+        min-height: 10vh;
+        margin: 10px;
+    }
+    .forBoxes{
+        align-content: center;
+    }
+    .forLogo
+    {
+        justify-content: center;
+    }
+    h1{
+        padding-bottom: 0px;
+    }
+    .ingredient{
+        padding-bottom: 0px;
+        padding: 5px;
+    }
+    .forBoxes{
+        height: auto;
+    }
+    .SendBtn{
+        margin-bottom: 10px;
+    }
+}

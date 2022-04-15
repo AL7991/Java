@@ -1,0 +1,134 @@
+@import 
+url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
+@import 
+url('https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap');
+
+*
+{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: white;
+}
+.burgerimg
+{
+background-image: url(img/pexels-jonathan-borba-2983101.jpg);
+background-repeat: no-repeat;
+min-width: 100vw;
+min-height: 100vh;
+background-size: cover;
+background-position: right;
+overflow: hidden;
+}
+
+.forLogo
+{
+    width: calc(100vw - 2rem);
+    margin-left: 2rem;
+    height: 250px;
+}
+
+.logo{
+    width: 250px;
+    height: 250px;
+}
+
+.title
+{
+    padding: 50px 100px;
+    font-size: 70;
+    font-family: 'Playfair Display', serif;
+    color: white;
+}
+
+.text
+{
+    margin-left: 110px;
+    display: flex;
+    font-size: 30;
+    font-family: 'EB Garamond', serif;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    opacity: 0; 
+}
+
+a
+{
+text-decoration: none;	
+}
+
+.button
+{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 80px;
+    font-family: 'EB Garamond', serif;
+    font-size: 29;
+    background-color: rgb(0, 0, 255);
+    text-align: center;
+    margin-top: 70px;
+    margin-left: 200px;
+    border-radius: 50px;
+    transition: all 0.2s ease-in-out;
+    opacity: 0;  
+    
+ }
+
+.button:hover
+{
+    cursor: pointer;
+    font-size: 32;
+    background-color: rgb(2, 2, 223);
+    box-shadow: 0px 0px 30px 0px;
+    
+}
+
+.title , .text , .button
+{
+    animation: slide 0.8s linear forwards;
+}
+
+@keyframes slide{
+    0%{
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}
+
+.text
+{
+    animation-delay: 0.7s;
+}
+
+.button
+{
+    animation-delay: 1.4s;
+}
+
+@media screen and (max-width: 600px) {
+    .logo
+    {
+        height: 230px;
+        width: 230px;
+    }
+    .title{
+        padding: 50px 60px;
+        font-size: 60;
+    }
+    .text{
+        margin-left: 70px;
+        font-size: 27;
+    }
+    .button{
+        margin-top: 60px;
+        margin-left: 100px;
+    }
+    
+}
