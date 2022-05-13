@@ -11,7 +11,8 @@ Project technologies:
 - thymeleaf
 - validation
 - H2 for datebase
-- gson library (for geocoding).
+- gson library (for geocoding)
+- Leaflet library (JavaScript). 
 
 Link to Your Burger app hosting on heroku : https://your-burger-site.herokuapp.com/ 
 
