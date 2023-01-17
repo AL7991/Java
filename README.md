@@ -10,11 +10,9 @@ Project technologies:
 - jpa
 - thymeleaf
 - validation
-- H2 for datebase
+- H2 datebase
 - gson library (for geocoding)
 - Leaflet library (JavaScript). 
-
-Link to Your Burger app hosting on heroku : https://your-burger-site.herokuapp.com/ 
 
 
 # Video Cassette  Rental
