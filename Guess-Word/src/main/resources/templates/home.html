@@ -1,0 +1,60 @@
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess Word</title>
+</head>
+<body>
+
+    <header>   
+    </header>
+
+    <main>
+
+        
+        <div class="container">
+            
+            
+            <div class="forgame">
+
+            <header>
+                <h1 class="title">Zgadnij Słowo</h1>
+                <h3 class="wordNumber">Słowo numer: </h3>
+                <span class="rules">litera zielona - W dobrym miejscu</span>
+                <span class="rules">litera żółta - W innym miejscu</span>
+                <span class="rules">litera szara - Nie występuje</span>
+            </header>
+
+
+        <article>
+            <div class="forAnswer">
+                <div id="answer" class="answer"></div>
+            </div>
+        </article>
+        <article>
+            <div class="forKeyboard">
+                <div class="keyboard">
+                    <div class="rows"></div>
+                    <div class="rows"></div>
+                    <div class="rows"></div>
+                    <div class="rows"></div>
+                </div>
+            </div>
+        </article>
+        </div>
+                    
+    </div>
+
+    </main>
+    
+    <script type="text/javascript" th:inline="javascript">
+    var wordsList = [[${list}]];
+    var winWordsList =  [[${list2}]];
+    </script>
+    
+    <script src="script.js"></script>
+
+</body>
+</html>
