@@ -35,3 +35,7 @@ Project technologies:
 - spring boot
 - thymeleaf
 - gson library.
+
+# Guess-Word
+
+Project from JavaScript repo slightly improved.
