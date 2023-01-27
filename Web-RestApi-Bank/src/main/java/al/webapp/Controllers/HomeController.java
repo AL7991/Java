@@ -28,6 +28,7 @@ public class HomeController {
 
     @GetMapping("/{userName}")
     public ResponseEntity<User>  getUserByUserName(@PathVariable("userName") String userName){
+
         Optional<User> optionalUser = userRepo.findByUserName(userName);
 
         if(optionalUser.isPresent()){
@@ -35,7 +36,6 @@ public class HomeController {
         }
 
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-
     }
 
     @PostMapping(consumes = "application/json")
@@ -47,9 +47,6 @@ public class HomeController {
         userInfoRepo.save(user.getInfo());
 
         return userRepo.save(user);
-
     }
-
-
 
 }

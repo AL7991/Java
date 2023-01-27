@@ -17,7 +17,7 @@ public class UserInfo implements Serializable {
 
     private String street;
 
-    private String state;
+    private String city;
 
     private String zip;
 
@@ -28,11 +28,11 @@ public class UserInfo implements Serializable {
     public UserInfo(){
     }
 
-    public UserInfo(Long id, String name, String street, String state, String zip) {
+    public UserInfo(Long id, String name, String street, String city, String zip) {
         this.id = id;
         this.name = name;
         this.street = street;
-        this.state = state;
+        this.city = city;
         this.zip = zip;
     }
 
@@ -56,12 +56,12 @@ public class UserInfo implements Serializable {
         this.street = street;
     }
 
-    public String getState() {
-        return state;
+    public String getCity() {
+        return city;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getZip() {
@@ -77,11 +77,11 @@ public class UserInfo implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserInfo userInfo = (UserInfo) o;
-        return Objects.equals(id, userInfo.id) && Objects.equals(name, userInfo.name) && Objects.equals(street, userInfo.street) && Objects.equals(state, userInfo.state) && Objects.equals(zip, userInfo.zip);
+        return Objects.equals(id, userInfo.id) && Objects.equals(name, userInfo.name) && Objects.equals(street, userInfo.street) && Objects.equals(city, userInfo.city) && Objects.equals(zip, userInfo.zip);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, street, state, zip);
+        return Objects.hash(id, name, street, city, zip);
     }
 }

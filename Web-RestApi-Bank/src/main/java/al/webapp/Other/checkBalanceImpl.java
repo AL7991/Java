@@ -25,8 +25,10 @@ public class checkBalanceImpl implements checkBalance{
             if(accountSender.get().getAmountOfMoney().compareTo(amount) > 0){
                 accountSender.get().setAmountOfMoney(accountSender.get().getAmountOfMoney().subtract(amount));
                 accountRcevier.get().setAmountOfMoney(accountRcevier.get().getAmountOfMoney().add(amount));
+                return true;
             }
 
+            return false;
         }
 
         return false;
