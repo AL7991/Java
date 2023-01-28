@@ -38,6 +38,18 @@ public class HomeController {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<Iterable<User>>  getAllUsers(){
+
+        Optional<Iterable<User>> users = Optional.of(userRepo.findAll());
+
+        if(users.isPresent()){
+            return new ResponseEntity<>(users.get(), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public User postUser(@RequestBody User user){
