@@ -17,20 +17,31 @@ public class checkBalanceImpl implements checkBalance{
     }
 
     @Override
-    public boolean checkIfHaveCash(Long sender , Long recevier , BigDecimal amount) {
+    public boolean checkIfHaveCash(Long sender , BigDecimal amount) throws wrongAccountNumberException {
+        Optional<Account> accountSender = accountRepo.findById(sender);
+
+        if(accountSender.isPresent()){
+            if(accountSender.get().getAmountOfMoney().compareTo(amount) > 0){
+                return true;
+            }else{
+                return false;
+            }
+        } else {
+            throw new wrongAccountNumberException();
+        }
+    }
+
+    @Override
+    public void doTransaction(Long sender, Long recevier, BigDecimal amount) throws wrongAccountNumberException {
         Optional<Account> accountSender = accountRepo.findById(sender);
         Optional<Account> accountRcevier =accountRepo.findById(recevier);
 
-        if(accountSender.isPresent() && accountRcevier.isPresent()){
-            if(accountSender.get().getAmountOfMoney().compareTo(amount) > 0){
-                accountSender.get().setAmountOfMoney(accountSender.get().getAmountOfMoney().subtract(amount));
-                accountRcevier.get().setAmountOfMoney(accountRcevier.get().getAmountOfMoney().add(amount));
-                return true;
-            }
-
-            return false;
+        if(accountRcevier.isPresent()){
+            accountSender.get().setAmountOfMoney(accountSender.get().getAmountOfMoney().subtract(amount));
+            accountRcevier.get().setAmountOfMoney(accountRcevier.get().getAmountOfMoney().add(amount));
+        }else {
+            throw new wrongAccountNumberException();
         }
 
-        return false;
     }
 }
