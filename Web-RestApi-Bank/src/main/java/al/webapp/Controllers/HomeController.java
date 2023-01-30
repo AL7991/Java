@@ -1,6 +1,9 @@
 package al.webapp.Controllers;
 
+import al.webapp.Objects.Transaction;
 import al.webapp.Objects.User;
+import al.webapp.Other.checkBalance;
+import al.webapp.Other.wrongAccountNumberException;
 import al.webapp.repository.AccountRepository;
 import al.webapp.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +21,14 @@ public class HomeController {
     private UserRepository userRepo;
     private UserInfoRepository userInfoRepo;
     private AccountRepository accountRepo;
+    private checkBalance checkBal;
 
     @Autowired
-    public HomeController(UserRepository userRepo, UserInfoRepository userInfoRepo, AccountRepository accountRepo) {
+    public HomeController(UserRepository userRepo, UserInfoRepository userInfoRepo, AccountRepository accountRepo, checkBalance checkBal) {
         this.userRepo = userRepo;
         this.userInfoRepo = userInfoRepo;
         this.accountRepo = accountRepo;
+        this.checkBal = checkBal;
     }
 
     @GetMapping("/{userName}")
@@ -59,6 +64,29 @@ public class HomeController {
         userInfoRepo.save(user.getInfo());
 
         return userRepo.save(user);
+    }
+
+    @RequestMapping("/put")
+    @PostMapping(consumes = "application/json")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void postTransaction(@RequestBody Transaction transaction){
+
+        try {
+            boolean b = checkBal.checkIfHaveCash(transaction.getAccountSender(), transaction.getAmount());
+
+            if(b){
+                try{
+                    checkBal.doTransaction(transaction.getAccountSender(),transaction.getAccountReciver(), transaction.getAmount());
+                } catch(wrongAccountNumberException e){
+                    e.getMessage();
+                }
+            }
+
+        } catch (wrongAccountNumberException e) {
+            e.getMessage();
+        }
+
+
     }
 
 }
