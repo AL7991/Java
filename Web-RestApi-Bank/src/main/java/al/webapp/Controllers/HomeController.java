@@ -2,91 +2,44 @@ package al.webapp.Controllers;
 
 import al.webapp.Objects.Transaction;
 import al.webapp.Objects.User;
-import al.webapp.Other.checkBalance;
-import al.webapp.Other.wrongAccountNumberException;
-import al.webapp.repository.AccountRepository;
-import al.webapp.repository.UserInfoRepository;
+import al.webapp.Other.Manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import al.webapp.repository.UserRepository;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 public class HomeController {
 
-    private UserRepository userRepo;
-    private UserInfoRepository userInfoRepo;
-    private AccountRepository accountRepo;
-    private checkBalance checkBal;
+    private Manager manager;
 
     @Autowired
-    public HomeController(UserRepository userRepo, UserInfoRepository userInfoRepo, AccountRepository accountRepo, checkBalance checkBal) {
-        this.userRepo = userRepo;
-        this.userInfoRepo = userInfoRepo;
-        this.accountRepo = accountRepo;
-        this.checkBal = checkBal;
+    public HomeController(Manager manager) {
+        this.manager = manager;
     }
 
     @GetMapping("/{userName}")
     public ResponseEntity<User>  getUserByUserName(@PathVariable("userName") String userName){
-
-        Optional<User> optionalUser = userRepo.findByUserName(userName);
-
-        if(optionalUser.isPresent()){
-            return new ResponseEntity<>(optionalUser.get(), HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return manager.getUserByUserName(userName);
     }
 
     @GetMapping("/all")
     public ResponseEntity<Iterable<User>>  getAllUsers(){
-
-        Optional<Iterable<User>> users = Optional.of(userRepo.findAll());
-
-        if(users.isPresent()){
-            return new ResponseEntity<>(users.get(), HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return manager.getAllUsers();
     }
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public User postUser(@RequestBody User user){
-
-        accountRepo.save(user.getAccount());
-
-        userInfoRepo.save(user.getInfo());
-
-        return userRepo.save(user);
+        return manager.saveUser(user);
     }
 
-    @RequestMapping("/put")
+    @RequestMapping("/transfer")
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void postTransaction(@RequestBody Transaction transaction){
-
-        try {
-            boolean b = checkBal.checkIfHaveCash(transaction.getAccountSender(), transaction.getAmount());
-
-            if(b){
-                try{
-                    checkBal.doTransaction(transaction.getAccountSender(),transaction.getAccountReciver(), transaction.getAmount());
-                } catch(wrongAccountNumberException e){
-                    e.getMessage();
-                }
-            }
-
-        } catch (wrongAccountNumberException e) {
-            e.getMessage();
-        }
-
-
+        manager.saveTransaction(transaction);
     }
 
 }
