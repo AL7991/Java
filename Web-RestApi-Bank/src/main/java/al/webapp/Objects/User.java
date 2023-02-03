@@ -1,7 +1,6 @@
 package al.webapp.Objects;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity

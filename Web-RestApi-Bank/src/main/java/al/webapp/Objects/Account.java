@@ -1,6 +1,6 @@
 package al.webapp.Objects;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
