@@ -36,7 +36,7 @@ public class LoginApi {
 
                 String token = Jwts.builder()
                         .claim("name", userTest.getUserName())
-                        .claim("role", "ROLE_USER")
+                        .claim("role", user.get().getRole())
                         .setIssuedAt(new Date(time))
                         .setExpiration(new Date(time + 3600000))
                         .signWith(SignatureAlgorithm.HS512, "ZG(9n.oY?s=]s,Q")

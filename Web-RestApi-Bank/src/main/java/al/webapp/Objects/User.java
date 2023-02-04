@@ -18,6 +18,8 @@ public class User {
     @OneToOne
     private UserInfo info;
 
+    private String role = "ROLE_USER";
+
     public User() {
     }
 
@@ -69,16 +71,20 @@ public class User {
         this.info = info;
     }
 
+    public String getRole() {return role; }
+
+    public void setRole(String role) {this.role = "ROLE_" + role; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(userName, user.userName) && Objects.equals(password, user.password) && Objects.equals(account, user.account) && Objects.equals(info, user.info);
+        return Objects.equals(id, user.id) && Objects.equals(userName, user.userName) && Objects.equals(password, user.password) && Objects.equals(account, user.account) && Objects.equals(info, user.info) && Objects.equals(role, user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userName, password, account, info);
+        return Objects.hash(id, userName, password, account, info, role);
     }
 }

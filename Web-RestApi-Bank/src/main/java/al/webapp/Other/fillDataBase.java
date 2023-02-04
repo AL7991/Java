@@ -53,6 +53,8 @@ public class fillDataBase {
         User user3 = new User(null,"wenus", "1990", account3, userIn3);
         User user4 = new User(null,"kali", "franek", account4, userIn4);
 
+        user1.setRole("ADMIN");
+
         userRepo.save(user1);
         userRepo.save(user2);
         userRepo.save(user3);
