@@ -1,39 +1,69 @@
 package al.webapp;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 
-public class JwtFilter implements javax.servlet.Filter {
+public class JwtFilter extends BasicAuthenticationFilter {
+    public JwtFilter(AuthenticationManager authenticationManager) {
+        super(authenticationManager);
+    }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        HttpServletRequest httpServletRequest = (HttpServletRequest)request;
+        String requestURI = request.getRequestURI();
 
-        String header = httpServletRequest.getHeader("Authorization");
-
-        if(httpServletRequest == null || !header.startsWith("Bearer ")) {
-
-            throw new ServletException("Wrong or Empty header");
-        }else{
-            try{
-                String token = header.substring(7);
-                Claims claims = Jwts.parser().setSigningKey("ZG(9n.oY?s=]s,Q").parseClaimsJws(token).getBody();
-            }catch (Exception e){
-                throw new ServletException("Wrong key");
-            }
-
+        if(requestURI.equals("/logIn")){
+            chain.doFilter(request, response);
+            return;
         }
 
-        chain.doFilter(request,response);
+        String header = request.getHeader("Authorization");
 
+        if(header == null || !header.startsWith("Bearer ")){
+            throw new ServletException("Wrong or Empty header");
+        }
+
+        UsernamePasswordAuthenticationToken authRequest = getAuthenticationByToken(header);
+
+        SecurityContextHolder.getContext().setAuthentication(authRequest);
+
+        chain.doFilter(request, response);
 
     }
+
+    private UsernamePasswordAuthenticationToken getAuthenticationByToken(String header) throws ServletException {
+
+        try {
+
+            Jws<Claims> claimsJws = Jwts.parser().setSigningKey("ZG(9n.oY?s=]s,Q")
+                    .parseClaimsJws(header.substring(7));
+
+            String userName = claimsJws.getBody().get("name").toString();
+            String role = claimsJws.getBody().get("role").toString();
+
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+                    = new UsernamePasswordAuthenticationToken(userName, null, Collections.singleton(new SimpleGrantedAuthority(role)));
+
+            return usernamePasswordAuthenticationToken;
+        }catch (Exception e){
+            throw new ServletException("Wrong key");
+        }
+
+    }
+
+
 }
