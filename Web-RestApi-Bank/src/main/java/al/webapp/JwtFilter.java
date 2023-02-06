@@ -26,7 +26,7 @@ public class JwtFilter extends BasicAuthenticationFilter {
 
         String requestURI = request.getRequestURI();
 
-        if(requestURI.equals("/logIn")){
+        if(requestURI.equals("/logIn") || requestURI.equals("/register")){
             chain.doFilter(request, response);
             return;
         }

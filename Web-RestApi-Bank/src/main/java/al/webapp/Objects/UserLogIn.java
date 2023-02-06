@@ -1,9 +1,9 @@
 package al.webapp.Objects;
 
 
-public class UserTest {
+public class UserLogIn {
 
-    public UserTest(String userName, String password) {
+    public UserLogIn(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }

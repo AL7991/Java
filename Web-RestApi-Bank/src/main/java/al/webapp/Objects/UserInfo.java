@@ -21,6 +21,8 @@ public class UserInfo implements Serializable {
 
     private String zip;
 
+    private String phone;
+
     public Long getId() {
         return id;
     }
@@ -28,12 +30,13 @@ public class UserInfo implements Serializable {
     public UserInfo(){
     }
 
-    public UserInfo(Long id, String name, String street, String city, String zip) {
+    public UserInfo(Long id, String name, String street, String city, String zip, String phone) {
         this.id = id;
         this.name = name;
         this.street = street;
         this.city = city;
         this.zip = zip;
+        this.phone = phone;
     }
 
     public void setId(Long id) {
@@ -72,16 +75,24 @@ public class UserInfo implements Serializable {
         this.zip = zip;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserInfo userInfo = (UserInfo) o;
-        return Objects.equals(id, userInfo.id) && Objects.equals(name, userInfo.name) && Objects.equals(street, userInfo.street) && Objects.equals(city, userInfo.city) && Objects.equals(zip, userInfo.zip);
+        return Objects.equals(id, userInfo.id) && Objects.equals(name, userInfo.name) && Objects.equals(street, userInfo.street) && Objects.equals(city, userInfo.city) && Objects.equals(zip, userInfo.zip) && Objects.equals(phone, userInfo.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, street, city, zip);
+        return Objects.hash(id, name, street, city, zip, phone);
     }
 }
