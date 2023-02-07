@@ -26,8 +26,7 @@ public class UserRegister {
     private BigDecimal amountOfMoney;
 
     public UserRegister() { }
-
-    public User userRegisterToUser(PasswordEncoder passEncoder, AccountRepository accountRepo, UserInfoRepository userInfoRepo, UserRepository userRepo){
+    public void userRegisterToUser(PasswordEncoder passEncoder, AccountRepository accountRepo, UserInfoRepository userInfoRepo, UserRepository userRepo){
         Account account = new Account(null, amountOfMoney);
         accountRepo.save(account);
 
@@ -36,7 +35,6 @@ public class UserRegister {
 
         User user = new User(null, userName, passEncoder.encode(password), account, userInfo);
         userRepo.save(user);
-        return user;
     }
 
     public String getUserName() {

@@ -1,4 +1,4 @@
-package al.webapp;
+package al.webapp.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,9 +20,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/logIn", "/register").permitAll()
-                .antMatchers("/hello").authenticated()
-                .antMatchers("/hello2").hasRole("ADMIN")
+                .antMatchers("/api/logIn", "/api/register").permitAll()
+                .antMatchers("/api/test").authenticated()
+                .antMatchers("/api/test2").hasRole("ADMIN")
                 .and()
                 .addFilter(new JwtFilter(authenticationManager()));
     }

@@ -1,4 +1,4 @@
-package al.webapp;
+package al.webapp.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -26,7 +26,7 @@ public class JwtFilter extends BasicAuthenticationFilter {
 
         String requestURI = request.getRequestURI();
 
-        if(requestURI.equals("/logIn") || requestURI.equals("/register")){
+        if(requestURI.equals("/api/logIn") || requestURI.equals("/api/register")){
             chain.doFilter(request, response);
             return;
         }
