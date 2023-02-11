@@ -66,5 +66,15 @@ public class HomeController {
 
     }
 
+    @PostMapping("/repaymentPartOfCredit")
+    public ResponseEntity<String> repaymentPartOfCredit(@RequestBody BigDecimal amount) {
+            return checkCredit.repaymentPartOfCredit(amount);
+    }
+
+    @PostMapping("/repaymentAllOfCredit")
+    public ResponseEntity<String> repaymentAllOfCredit() {
+        return checkCredit.repaymentAllOfCredit();
+    }
+
 
 }

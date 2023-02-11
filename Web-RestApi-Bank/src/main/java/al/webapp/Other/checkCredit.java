@@ -49,11 +49,81 @@ public class checkCredit {
 
     }
 
+    public ResponseEntity<String> repaymentPartOfCredit(BigDecimal amount){
+
+        Account account = loggedUserAccount();
+
+        if(account.ifAlreadyHaveCredit()){
+
+            if(account.getAmountOfMoney().compareTo(amount) >= 0){
+
+                if(account.getAmountOfCredit().compareTo(amount) > 0){
+
+                    account.setAmountOfMoney(account.getAmountOfMoney().subtract(amount));
+                    account.setAmountOfCredit(account.getAmountOfCredit().subtract(amount));
+                    accountRepo.save(account);
+
+                    return new ResponseEntity<>("Payment accepted", HttpStatus.OK);
+
+                }else{
+
+                    payAllCredit(account);
+
+                    return new ResponseEntity<>("The loan has been repaid.", HttpStatus.OK);
+                }
+
+            }else{
+                return new ResponseEntity<>("You don't have that amount", HttpStatus.NOT_ACCEPTABLE);
+            }
+
+        }else{
+            return new ResponseEntity<>("You have no credit", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    public ResponseEntity<String> repaymentAllOfCredit() {
+
+        Account account = loggedUserAccount();
+
+        if(account.ifAlreadyHaveCredit()){
+
+            if(account.getAmountOfMoney().compareTo(account.getAmountOfCredit()) >= 0){
+
+                payAllCredit(account);
+
+                return new ResponseEntity<>("The loan has been repaid.", HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity<>("You don't have that amount", HttpStatus.NOT_ACCEPTABLE);
+            }
+
+
+        }else{
+            return new ResponseEntity<>("You have no credit", HttpStatus.BAD_REQUEST);
+        }
+
+
+
+    }
+
+
+
     private Account loggedUserAccount(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         Optional<User> user = userRepo.findByUserName(currentPrincipalName);
         return user.get().getAccount();
+    }
+
+
+    private void payAllCredit(Account account){
+
+        account.setAmountOfMoney(account.getAmountOfMoney().subtract(account.getAmountOfCredit()));
+        account.setAmountOfCredit(new BigDecimal(0));
+        account.setAlreadyHaveCredit(false);
+        accountRepo.save(account);
+
     }
 
 
