@@ -1,8 +1,8 @@
-package al.webapp.Other;
+package al.webapp.other;
 
-import al.webapp.Objects.Account;
-import al.webapp.Objects.User;
-import al.webapp.Objects.UserInfo;
+import al.webapp.objects.Account;
+import al.webapp.objects.User;
+import al.webapp.objects.UserInfo;
 import al.webapp.repository.AccountRepository;
 import al.webapp.repository.UserInfoRepository;
 import al.webapp.repository.UserRepository;
@@ -15,14 +15,14 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 @Service
-public class fillDataBase {
+public class FillDataBase {
     private UserRepository userRepo;
     private UserInfoRepository userInfoRepo;
     private AccountRepository accountRepo;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public fillDataBase(UserRepository userRepo, UserInfoRepository userInfoRepo, AccountRepository accountRepo, PasswordEncoder passwordEncoder) {
+    public FillDataBase(UserRepository userRepo, UserInfoRepository userInfoRepo, AccountRepository accountRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.userInfoRepo = userInfoRepo;
         this.accountRepo = accountRepo;

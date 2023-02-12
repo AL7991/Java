@@ -1,9 +1,9 @@
 package al.webapp.repository;
 
-import al.webapp.Objects.Transaction;
+import al.webapp.objects.Transfer;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TransactionRepository extends CrudRepository<Transaction, Long> {
+public interface TransferRepository extends CrudRepository<Transfer, Long> {
 }

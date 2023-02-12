@@ -1,6 +1,6 @@
-package al.webapp.Other;
+package al.webapp.other;
 
-public class wrongAccountNumberException extends Exception{
+public class WrongAccountNumberException extends Exception{
 
     @Override
     public String getMessage() {

@@ -1,6 +1,6 @@
 package al.webapp.repository;
 
-import al.webapp.Objects.Account;
+import al.webapp.objects.Account;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

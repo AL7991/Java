@@ -1,4 +1,4 @@
-package al.webapp.Objects;
+package al.webapp.objects;
 
 import javax.persistence.*;
 import java.util.Objects;

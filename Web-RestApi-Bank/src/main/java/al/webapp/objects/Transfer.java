@@ -1,4 +1,4 @@
-package al.webapp.Objects;
+package al.webapp.objects;
 
 import javax.persistence.*;
 
@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-public class Transaction implements Serializable {
+public class Transfer implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,10 +21,10 @@ public class Transaction implements Serializable {
 
     private BigDecimal amount;
 
-    public Transaction() {
+    public Transfer() {
     }
 
-    public Transaction(Long id, Long accountSender, Long accountReciver, BigDecimal amount) {
+    public Transfer(Long id, Long accountSender, Long accountReciver, BigDecimal amount) {
         this.id = id;
         this.accountSender = accountSender;
         this.accountReciver = accountReciver;
@@ -67,7 +67,7 @@ public class Transaction implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Transaction that = (Transaction) o;
+        Transfer that = (Transfer) o;
         return Objects.equals(id, that.id) && Objects.equals(accountSender, that.accountSender) && Objects.equals(accountReciver, that.accountReciver) && Objects.equals(amount, that.amount);
     }
 

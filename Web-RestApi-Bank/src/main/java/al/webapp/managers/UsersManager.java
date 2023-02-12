@@ -1,9 +1,9 @@
-package al.webapp.Other;
+package al.webapp.managers;
 
-import al.webapp.Objects.Transaction;
-import al.webapp.Objects.User;
-import al.webapp.Objects.UserLogIn;
-import al.webapp.Objects.UserRegister;
+import al.webapp.objects.Account;
+import al.webapp.objects.User;
+import al.webapp.objects.UserLogIn;
+import al.webapp.objects.UserRegister;
 import al.webapp.repository.AccountRepository;
 import al.webapp.repository.UserInfoRepository;
 import al.webapp.repository.UserRepository;
@@ -12,27 +12,26 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Date;
 import java.util.Optional;
 
 @Service
-public class Manager {
+public class UsersManager {
     private UserRepository userRepo;
     private UserInfoRepository userInfoRepo;
     private AccountRepository accountRepo;
-    private checkBalance checkBal;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public Manager(UserRepository userRepo, UserInfoRepository userInfoRepo, AccountRepository accountRepo, checkBalance checkBal, PasswordEncoder passwordEncoder) {
+    public UsersManager(UserRepository userRepo, UserInfoRepository userInfoRepo, AccountRepository accountRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.userInfoRepo = userInfoRepo;
         this.accountRepo = accountRepo;
-        this.checkBal = checkBal;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -69,22 +68,7 @@ public class Manager {
             return new ResponseEntity<>(null, HttpStatus.CREATED);
         }
     }
-    public void saveTransaction(Transaction transaction){
-        try {
-            boolean balance = checkBal.checkIfHaveCash(transaction.getAccountSender(), transaction.getAmount());
-            if(balance){
-                try{
-                    checkBal.doTransaction(transaction.getAccountSender(),transaction.getAccountReciver(), transaction.getAmount());
-                } catch(wrongAccountNumberException e){
-                    e.getMessage();
-                }
-            }
-
-        } catch (wrongAccountNumberException e) {
-            e.getMessage();
-        }
-    }
-    public ResponseEntity<String> login(UserLogIn userLogIn) {
+    public ResponseEntity<String> loginToken(UserLogIn userLogIn) {
 
         Optional<User> user = userRepo.findByUserName(userLogIn.getUserName());
 
@@ -109,12 +93,11 @@ public class Manager {
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
-
-
-
-
-
-
-
+    public Account loggedUserAccount(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        Optional<User> user = userRepo.findByUserName(currentPrincipalName);
+        return user.get().getAccount();
+    }
 
 }

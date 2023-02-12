@@ -1,5 +1,4 @@
-package al.webapp.Objects;
-
+package al.webapp.objects;
 
 public class UserLogIn {
 
