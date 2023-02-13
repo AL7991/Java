@@ -13,9 +13,9 @@ public class User {
     private String userName;
 
     private String password;
-    @OneToOne
+    @OneToOne(targetEntity = Account.class)
     private Account account;
-    @OneToOne
+    @OneToOne(targetEntity = UserInfo.class)
     private UserInfo info;
 
     private String role = "ROLE_USER";

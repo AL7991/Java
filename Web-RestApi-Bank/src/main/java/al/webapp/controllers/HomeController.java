@@ -1,6 +1,6 @@
 package al.webapp.controllers;
 
-import al.webapp.objects.Transfer;
+import al.webapp.objects.Transaction;
 import al.webapp.objects.User;
 import al.webapp.objects.UserLogIn;
 import al.webapp.objects.UserRegister;
@@ -8,7 +8,6 @@ import al.webapp.managers.UsersManager;
 import al.webapp.managers.CreditManager;
 import al.webapp.managers.TransactionsManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +43,7 @@ public class HomeController {
 
     @RequestMapping("/transfer")
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<String> doTransfer(@RequestBody Transfer transfer){return transactionsManager.doTransfer(transfer); }
+    public ResponseEntity<String> doTransfer(@RequestBody Transaction transaction){return transactionsManager.doTransfer(transaction); }
 
     @RequestMapping("/logIn")
     @PostMapping(consumes = "application/json")

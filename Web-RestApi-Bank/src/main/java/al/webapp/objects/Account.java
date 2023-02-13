@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,6 +20,9 @@ public class Account implements Serializable {
     private boolean alreadyHaveCredit = false;
     private BigDecimal amountOfCredit = new BigDecimal(0);
 
+    @ManyToMany(targetEntity = Transaction.class)
+    private List<Transaction> transactionHistory = new ArrayList<Transaction>();
+
     public Account() {
     }
 
@@ -25,8 +30,6 @@ public class Account implements Serializable {
         this.accountNumber = accountNumber;
         this.amountOfMoney = amountOfMoney;
     }
-
-
 
     public Long getAccountNumber() {
         return accountNumber;
@@ -60,16 +63,20 @@ public class Account implements Serializable {
         this.amountOfCredit = amountOfCredit;
     }
 
+    public List getTransactionHistory() {return transactionHistory; }
+
+    public void addTransactionToTransactionHistory(Transaction transaction) {this.transactionHistory.add(transaction) ; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return alreadyHaveCredit == account.alreadyHaveCredit && Objects.equals(accountNumber, account.accountNumber) && Objects.equals(amountOfMoney, account.amountOfMoney) && Objects.equals(amountOfCredit, account.amountOfCredit);
+        return alreadyHaveCredit == account.alreadyHaveCredit && Objects.equals(accountNumber, account.accountNumber) && Objects.equals(amountOfMoney, account.amountOfMoney) && Objects.equals(amountOfCredit, account.amountOfCredit) && Objects.equals(transactionHistory, account.transactionHistory);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountNumber, amountOfMoney, alreadyHaveCredit, amountOfCredit);
+        return Objects.hash(accountNumber, amountOfMoney, alreadyHaveCredit, amountOfCredit, transactionHistory);
     }
 }

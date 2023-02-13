@@ -1,7 +1,10 @@
 package al.webapp.managers;
 
 import al.webapp.objects.Account;
+import al.webapp.objects.Transaction;
+import al.webapp.other.EnumValues;
 import al.webapp.repository.AccountRepository;
+import al.webapp.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +15,17 @@ import java.math.BigDecimal;
 
 @Service
 public class CreditManager {
+
     private TransactionsManager transactionsManager;
     private AccountRepository accountRepo;
+    private TransactionRepository transactionRepo;
     private final BigDecimal maxAmountOfCredit = new BigDecimal(5000);
 
     @Autowired
-    public CreditManager(TransactionsManager transactionsManager, AccountRepository accountRepo) {
+    public CreditManager(TransactionsManager transactionsManager, AccountRepository accountRepo, TransactionRepository transactionRepo) {
         this.transactionsManager = transactionsManager;
         this.accountRepo = accountRepo;
+        this.transactionRepo = transactionRepo;
     }
 
     public ResponseEntity<String> takeCredit(BigDecimal amount){
@@ -33,6 +39,11 @@ public class CreditManager {
                 account.setAmountOfMoney(account.getAmountOfMoney().add(amount));
                 account.setAmountOfCredit(amount);
                 account.setAlreadyHaveCredit(true);
+
+                Transaction transaction = new Transaction(null, EnumValues.TransactionType.TAKECREDIT, account.getAccountNumber(), 0L, amount);
+                transactionRepo.save(transaction);
+                account.addTransactionToTransactionHistory(transaction);
+
                 accountRepo.save(account);
 
                 return new ResponseEntity<>("Credit granted.", HttpStatus.OK);
@@ -42,21 +53,17 @@ public class CreditManager {
         }
     }
 
-    public ResponseEntity<String> repaymentPartOfCredit(BigDecimal amount){
-        return checkPayment(Options.partPayment,amount);
-    }
+    public ResponseEntity<String> repaymentPartOfCredit(BigDecimal amount){return checkPayment(EnumValues.PaymentType.PARTPAYMENT,amount); }
 
-    public ResponseEntity<String> repaymentAllOfCredit() {
-        return checkPayment(Options.allPayment,null);
-    }
+    public ResponseEntity<String> repaymentAllOfCredit() {return checkPayment(EnumValues.PaymentType.ALLPAYMENT,null); }
 
-    private ResponseEntity<String> checkPayment(Options option,BigDecimal amount){
+    private ResponseEntity<String> checkPayment(EnumValues.PaymentType paymentType,BigDecimal amount){
 
         Account account = transactionsManager.loggedUserAccount();
 
         if(account.ifAlreadyHaveCredit()){
-            switch (option) {
-                case allPayment:
+            switch (paymentType) {
+                case ALLPAYMENT:
                     if(account.getAmountOfMoney().compareTo(account.getAmountOfCredit()) >= 0){
                         payAllCredit(account);
 
@@ -64,11 +71,16 @@ public class CreditManager {
                     }else{
                         return new ResponseEntity<>("The amount exceeds the balance of the account.", HttpStatus.NOT_ACCEPTABLE);
                     }
-                case partPayment:
+                case PARTPAYMENT:
                     if(account.getAmountOfMoney().compareTo(amount) >= 0){
                         if(account.getAmountOfCredit().compareTo(amount) > 0){
                             account.setAmountOfMoney(account.getAmountOfMoney().subtract(amount));
                             account.setAmountOfCredit(account.getAmountOfCredit().subtract(amount));
+
+                            Transaction transaction = new Transaction(null, EnumValues.TransactionType.REPAYMENTCREDIT, account.getAccountNumber(), 0l, amount);
+                            transactionRepo.save(transaction);
+                            account.addTransactionToTransactionHistory(transaction);
+
                             accountRepo.save(account);
 
                             return new ResponseEntity<>("Payment accepted", HttpStatus.OK);
@@ -90,11 +102,13 @@ public class CreditManager {
 
     private void payAllCredit(Account account){
         account.setAmountOfMoney(account.getAmountOfMoney().subtract(account.getAmountOfCredit()));
+        Transaction transaction = new Transaction(null, EnumValues.TransactionType.REPAYMENTCREDIT, account.getAccountNumber(), 0l, account.getAmountOfCredit());
+        transactionRepo.save(transaction);
+        account.addTransactionToTransactionHistory(transaction);
         account.setAmountOfCredit(new BigDecimal(0));
         account.setAlreadyHaveCredit(false);
+
         accountRepo.save(account);
     }
 }
- enum Options{
-    partPayment,allPayment
-}
+
