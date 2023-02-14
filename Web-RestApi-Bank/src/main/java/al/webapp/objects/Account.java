@@ -63,6 +63,10 @@ public class Account implements Serializable {
         this.amountOfCredit = amountOfCredit;
     }
 
+    public boolean isAlreadyHaveCredit() {
+        return alreadyHaveCredit;
+    }
+
     public List getTransactionHistory() {return transactionHistory; }
 
     public void addTransactionToTransactionHistory(Transaction transaction) {this.transactionHistory.add(transaction) ; }

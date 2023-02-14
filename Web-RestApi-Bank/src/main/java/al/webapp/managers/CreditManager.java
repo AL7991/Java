@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 
 @Service
 public class CreditManager {
-
     private TransactionsManager transactionsManager;
     private AccountRepository accountRepo;
     private TransactionRepository transactionRepo;
@@ -40,7 +39,7 @@ public class CreditManager {
                 account.setAmountOfCredit(amount);
                 account.setAlreadyHaveCredit(true);
 
-                Transaction transaction = new Transaction(null, EnumValues.TransactionType.TAKECREDIT, account.getAccountNumber(), 0L, amount);
+                Transaction transaction = new Transaction(null, EnumValues.TransactionType.TAKECREDIT, account.getAccountNumber(), amount);
                 transactionRepo.save(transaction);
                 account.addTransactionToTransactionHistory(transaction);
 
@@ -77,7 +76,7 @@ public class CreditManager {
                             account.setAmountOfMoney(account.getAmountOfMoney().subtract(amount));
                             account.setAmountOfCredit(account.getAmountOfCredit().subtract(amount));
 
-                            Transaction transaction = new Transaction(null, EnumValues.TransactionType.REPAYMENTCREDIT, account.getAccountNumber(), 0l, amount);
+                            Transaction transaction = new Transaction(null, EnumValues.TransactionType.REPAYMENTCREDIT, account.getAccountNumber(), amount);
                             transactionRepo.save(transaction);
                             account.addTransactionToTransactionHistory(transaction);
 
@@ -102,7 +101,7 @@ public class CreditManager {
 
     private void payAllCredit(Account account){
         account.setAmountOfMoney(account.getAmountOfMoney().subtract(account.getAmountOfCredit()));
-        Transaction transaction = new Transaction(null, EnumValues.TransactionType.REPAYMENTCREDIT, account.getAccountNumber(), 0l, account.getAmountOfCredit());
+        Transaction transaction = new Transaction(null, EnumValues.TransactionType.REPAYMENTCREDIT, account.getAccountNumber(),account.getAmountOfCredit());
         transactionRepo.save(transaction);
         account.addTransactionToTransactionHistory(transaction);
         account.setAmountOfCredit(new BigDecimal(0));

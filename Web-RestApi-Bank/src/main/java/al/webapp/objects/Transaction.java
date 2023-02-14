@@ -6,6 +6,9 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -18,20 +21,22 @@ public class Transaction implements Serializable {
     private Long id;
 
     private EnumValues.TransactionType transactionType;
-    private Long accountSender;
 
-    private Long accountReciver;
+    private final LocalDate dateOfTransaction = LocalDate.now();
+
+    private final LocalTime timeOfTransaction = LocalTime.now();
+
+    private Long userAccountId;
 
     private BigDecimal amount;
 
-    public Transaction() {
+    public Transaction(){
     }
 
-    public Transaction(Long id, EnumValues.TransactionType transactionType, Long accountSender, Long accountReciver, BigDecimal amount) {
+    public Transaction(Long id, EnumValues.TransactionType transactionType, Long userAccountId, BigDecimal amount) {
         this.id = id;
         this.transactionType = transactionType;
-        this.accountSender = accountSender;
-        this.accountReciver = accountReciver;
+        this.userAccountId = userAccountId;
         this.amount = amount;
     }
 
@@ -39,9 +44,11 @@ public class Transaction implements Serializable {
         return transactionType;
     }
 
-    public void setTransactionType(EnumValues.TransactionType transactionType) {
-        this.transactionType = transactionType;
-    }
+    public void setTransactionType(EnumValues.TransactionType transactionType) {this.transactionType = transactionType; }
+
+    public LocalDate getDateOfTransaction() {return dateOfTransaction; }
+
+    public LocalTime getTimeOfTransaction() {return timeOfTransaction; }
 
     public Long getId() {
         return id;
@@ -51,20 +58,12 @@ public class Transaction implements Serializable {
         this.id = id;
     }
 
-    public Long getAccountSender() {
-        return accountSender;
+    public Long getUserAccountId() {
+        return userAccountId;
     }
 
-    public void setAccountSender(Long accountSender) {
-        this.accountSender = accountSender;
-    }
-
-    public Long getAccountReciver() {
-        return accountReciver;
-    }
-
-    public void setAccountReciver(Long accountReciver) {
-        this.accountReciver = accountReciver;
+    public void setUserAccountId(Long userAccountId) {
+        this.userAccountId = userAccountId;
     }
 
     public BigDecimal getAmount() {
@@ -79,12 +78,12 @@ public class Transaction implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Transaction transaction = (Transaction) o;
-        return Objects.equals(id, transaction.id) && transactionType == transaction.transactionType && Objects.equals(accountSender, transaction.accountSender) && Objects.equals(accountReciver, transaction.accountReciver) && Objects.equals(amount, transaction.amount);
+        Transaction that = (Transaction) o;
+        return Objects.equals(id, that.id) && transactionType == that.transactionType && Objects.equals(dateOfTransaction, that.dateOfTransaction) && Objects.equals(timeOfTransaction, that.timeOfTransaction) && Objects.equals(userAccountId, that.userAccountId) && Objects.equals(amount, that.amount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, transactionType, accountSender, accountReciver, amount);
+        return Objects.hash(id, transactionType, dateOfTransaction, timeOfTransaction, userAccountId, amount);
     }
 }

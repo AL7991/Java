@@ -59,10 +59,8 @@ public class UsersManager {
         Optional<User> user = userRepo.findByUserName(userRegister.getUserName());
 
         if (user.isPresent()) {
-
             return new ResponseEntity<>("User name is in used , change user name.", HttpStatus.NOT_ACCEPTABLE);
         }else{
-
             userRegister.userRegisterToUser(passwordEncoder,accountRepo,userInfoRepo,userRepo);
 
             return new ResponseEntity<>(null, HttpStatus.CREATED);
@@ -73,7 +71,6 @@ public class UsersManager {
         Optional<User> user = userRepo.findByUserName(userLogIn.getUserName());
 
         if (user.isPresent()) {
-
             if (passwordEncoder.matches(userLogIn.getPassword(), user.get().getPassword())) {
 
                 long time = System.currentTimeMillis();
@@ -87,9 +84,7 @@ public class UsersManager {
                         .compact();
 
                 return new ResponseEntity<>(token, HttpStatus.OK);
-
             }
-
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }

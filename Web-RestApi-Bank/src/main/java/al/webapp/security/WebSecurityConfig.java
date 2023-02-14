@@ -20,9 +20,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/logIn", "/api/register").permitAll()
-                .antMatchers( "api/transfer","api/takeCredit","/repaymentPartOfCredit","/repaymentAllOfCredit").authenticated()
-                .antMatchers("/api/user/*", "/api/all").hasRole("ADMIN")
+                .antMatchers("/logIn", "/register").permitAll()
+                .antMatchers( "/transaction/**").authenticated()
+                .antMatchers("/api/user/**").hasRole("ADMIN")
                 .and()
                 .addFilter(new JwtFilter(authenticationManager()));
     }

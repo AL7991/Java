@@ -2,6 +2,7 @@ package al.webapp.managers;
 
 import al.webapp.objects.Account;
 import al.webapp.objects.Transaction;
+import al.webapp.objects.Transfer;
 import al.webapp.objects.User;
 import al.webapp.other.EnumValues;
 import al.webapp.other.WrongAccountNumberException;
@@ -9,6 +10,8 @@ import al.webapp.repository.AccountRepository;
 import al.webapp.repository.TransactionRepository;
 import al.webapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -16,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 @Service
 public class TransactionsManager {
@@ -46,11 +50,11 @@ public class TransactionsManager {
             accountSender.setAmountOfMoney(accountSender.getAmountOfMoney().subtract(amount));
             accountRecevier.get().setAmountOfMoney(accountRecevier.get().getAmountOfMoney().add(amount));
 
-            Transaction transaction = new Transaction(null, EnumValues.TransactionType.TRANSFER, accountSender.getAccountNumber(), recevier, amount);
-            transactionRepo.save(transaction);
+            Transfer transfer = new Transfer(null, EnumValues.TransactionType.TRANSFER, accountSender.getAccountNumber(), recevier, amount);
+            transactionRepo.save(transfer);
 
-            accountSender.addTransactionToTransactionHistory(transaction);
-            accountRecevier.get().addTransactionToTransactionHistory(transaction);
+            accountSender.addTransactionToTransactionHistory(transfer);
+            accountRecevier.get().addTransactionToTransactionHistory(transfer);
 
             accountRepo.save(accountSender);
             accountRepo.save(accountRecevier.get());
@@ -58,15 +62,14 @@ public class TransactionsManager {
         }else {
             throw new WrongAccountNumberException();
         }
-
     }
 
-    public ResponseEntity<String> doTransfer(Transaction transaction){
+    public ResponseEntity<String> doTransfer(Transfer transfer){
         try {
-            boolean balance = checkIfHaveCash(transaction.getAmount());
+            boolean balance = checkIfHaveCash(transfer.getAmount());
             if(balance){
                 try{
-                    saveTransfer(transaction.getAccountReciver(), transaction.getAmount());
+                    saveTransfer(transfer.getAccountReciverId(), transfer.getAmount());
                     return new ResponseEntity<>("Transfer done.", HttpStatus.OK);
                 } catch(WrongAccountNumberException e){
                     return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -74,12 +77,24 @@ public class TransactionsManager {
             }else{
                 return new ResponseEntity<>("The amount exceeds the balance of the account.", HttpStatus.BAD_REQUEST);
             }
-
         } catch (WrongAccountNumberException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
     }
+
+    public List<Transaction> getAllTransactionHistory(){
+        Account account = loggedUserAccount();
+        List<Transaction> listOfTransactions = transactionRepo.findAllByUserAccountIdOrderByIdDesc(account.getAccountNumber());
+        return listOfTransactions;
+    }
+
+    public List<Transaction> getTransactionHistoryOfPage(int page){
+        Account account = loggedUserAccount();
+        Pageable pageable = PageRequest.of(page, 5);
+        List<Transaction> listOfTransactions = transactionRepo.findAllByUserAccountIdOrderByIdDesc(account.getAccountNumber(), pageable);
+        return listOfTransactions;
+    }
+
     public Account loggedUserAccount(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
