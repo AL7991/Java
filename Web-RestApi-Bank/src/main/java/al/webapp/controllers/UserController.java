@@ -3,8 +3,12 @@ package al.webapp.controllers;
 import al.webapp.objects.*;
 import al.webapp.managers.UsersManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/")
@@ -27,7 +31,7 @@ public class UserController {
 
     @RequestMapping("/register")
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<String> addUser(@RequestBody UserRegister userRegister){return usersManager.saveUser(userRegister); }
+    public ResponseEntity<String> addUser(@Valid @RequestBody UserRegister userRegister, Errors errors){return usersManager.saveUser(userRegister, errors); }
 
     @RequestMapping("/logIn")
     @PostMapping(consumes = "application/json")

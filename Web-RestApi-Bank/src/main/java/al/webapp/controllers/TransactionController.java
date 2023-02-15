@@ -40,7 +40,7 @@ public class TransactionController {
     public ResponseEntity<String> repaymentAllOfCredit() {return creditManager.repaymentAllOfCredit(); }
 
     @GetMapping("/history/all")
-    public List<Transaction> transactionHistoryAll(){return transactionsManager.getAllTransactionHistory(); }
+    public List<Transaction> transactionHistoryAll(){return transactionsManager.getTransactionHistoryAll(); }
 
     @GetMapping("/history/page/{page}")
     public List<Transaction> transactionHistoryOfPage(@PathVariable("page") int page){return transactionsManager.getTransactionHistoryOfPage(page); }

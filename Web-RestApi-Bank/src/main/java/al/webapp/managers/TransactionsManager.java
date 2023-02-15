@@ -10,6 +10,7 @@ import al.webapp.repository.AccountRepository;
 import al.webapp.repository.TransactionRepository;
 import al.webapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -82,7 +85,7 @@ public class TransactionsManager {
         }
     }
 
-    public List<Transaction> getAllTransactionHistory(){
+    public List<Transaction> getTransactionHistoryAll(){
         Account account = loggedUserAccount();
         List<Transaction> listOfTransactions = transactionRepo.findAllByUserAccountIdOrderByIdDesc(account.getAccountNumber());
         return listOfTransactions;

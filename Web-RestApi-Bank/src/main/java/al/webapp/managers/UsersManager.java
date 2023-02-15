@@ -16,8 +16,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,18 +58,29 @@ public class UsersManager {
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
-    public ResponseEntity<String> saveUser(UserRegister userRegister){
+
+    public ResponseEntity<String> saveUser(UserRegister userRegister, Errors errors){
 
         Optional<User> user = userRepo.findByUserName(userRegister.getUserName());
 
+        List listOfErrors = new ArrayList<>();
+
+        if(errors.hasErrors()){
+            errors.getAllErrors().forEach(e -> listOfErrors.add(((FieldError) e).getField()));
+        }
+        if(listOfErrors.size() > 0) {
+            return new ResponseEntity<>(listOfErrors.toString(), HttpStatus.NOT_ACCEPTABLE);
+        }
+
         if (user.isPresent()) {
-            return new ResponseEntity<>("User name is in used , change user name.", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>("User name is in used , change user name.", HttpStatus.CONFLICT);
         }else{
             userRegister.userRegisterToUser(passwordEncoder,accountRepo,userInfoRepo,userRepo);
 
             return new ResponseEntity<>(null, HttpStatus.CREATED);
         }
     }
+
     public ResponseEntity<String> loginToken(UserLogIn userLogIn) {
 
         Optional<User> user = userRepo.findByUserName(userLogIn.getUserName());
@@ -88,6 +103,7 @@ public class UsersManager {
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
+
     public Account loggedUserAccount(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
