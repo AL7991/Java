@@ -1,7 +1,22 @@
+# Bank Rest Api
+
+Banking application with functions such as making transfers, taking credits and their repayment,
+transaction history with pagination, and of course registration with logging in(using JSON Web Tokens).
+
+Project technologies:
+
+- spring boot
+- spring security
+- JSON Web Tokens
+- jpa
+- validation
+
+
 # Your Burger 
 
-Fast food delivery.
-
+Fast food delivery site.Possibility of placing orders (creating your own burger compositions),
+registering and logging in.Geocoding is used to display your location and the location of the restaurant that preparing the order on the map using the Leaflet library,
+to imitate the location of the driver delivering the order.
 
 Project technologies:
 
@@ -10,7 +25,6 @@ Project technologies:
 - jpa
 - thymeleaf
 - validation
-- H2 datebase
 - gson library (for geocoding)
 - Leaflet library (JavaScript). 
 
@@ -23,7 +37,6 @@ Project technologies:
 
 - spring boot
 - jpa
-- H2 for datebase.
 
 
 # Cat Facts 
