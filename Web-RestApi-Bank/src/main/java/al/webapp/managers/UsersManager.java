@@ -1,9 +1,6 @@
 package al.webapp.managers;
 
-import al.webapp.objects.Account;
-import al.webapp.objects.User;
-import al.webapp.objects.UserLogIn;
-import al.webapp.objects.UserRegister;
+import al.webapp.objects.*;
 import al.webapp.repository.AccountRepository;
 import al.webapp.repository.UserInfoRepository;
 import al.webapp.repository.UserRepository;
@@ -59,15 +56,22 @@ public class UsersManager {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
+    public ResponseEntity<String> removeUser(String userName){
+        Optional<User> userToRemove = userRepo.findByUserName(userName);
+        if(userToRemove.isPresent()){
+            userRepo.delete(userToRemove.get());
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
     public ResponseEntity<String> saveUser(UserRegister userRegister, Errors errors){
 
         Optional<User> user = userRepo.findByUserName(userRegister.getUserName());
 
-        List listOfErrors = new ArrayList<>();
+        List listOfErrors = errorsToList(errors);
 
-        if(errors.hasErrors()){
-            errors.getAllErrors().forEach(e -> listOfErrors.add(((FieldError) e).getField()));
-        }
         if(listOfErrors.size() > 0) {
             return new ResponseEntity<>(listOfErrors.toString(), HttpStatus.NOT_ACCEPTABLE);
         }
@@ -79,6 +83,28 @@ public class UsersManager {
 
             return new ResponseEntity<>(null, HttpStatus.CREATED);
         }
+    }
+
+    public ResponseEntity<String> changeUserInfo(UserInfo infoUserNew,Errors errors){
+
+        List listOfErrors = errorsToList(errors);
+
+        if(listOfErrors.size() > 0) {
+            return new ResponseEntity<>(listOfErrors.toString(), HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        User loggedUser = getLoggedUser();
+        UserInfo infoUser = loggedUser.getInfo();
+
+        infoUser.setName(infoUserNew.getName());
+        infoUser.setStreet(infoUserNew.getStreet());
+        infoUser.setCity(infoUserNew.getCity()) ;
+        infoUser.setZip(infoUserNew.getZip());
+        infoUser.setPhone(infoUserNew.getPhone());
+
+        userInfoRepo.save(infoUser);
+        return new ResponseEntity<>("User information updated.",HttpStatus.ACCEPTED);
+
     }
 
     public ResponseEntity<String> loginToken(UserLogIn userLogIn) {
@@ -104,11 +130,19 @@ public class UsersManager {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
-    public Account loggedUserAccount(){
+    public List errorsToList(Errors errors){
+        List listOfErrors = new ArrayList<>();
+        if(errors.hasErrors()){
+            errors.getAllErrors().forEach(e -> listOfErrors.add(((FieldError) e).getField()));
+        }
+        return listOfErrors;
+    }
+
+    public User getLoggedUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         Optional<User> user = userRepo.findByUserName(currentPrincipalName);
-        return user.get().getAccount();
+        return user.get();
     }
 
 }

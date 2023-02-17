@@ -21,7 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/logIn", "/register").permitAll()
-                .antMatchers( "/transaction/**").authenticated()
+                .antMatchers( "/transaction/**","/loggedUser","/updateUserInfo").authenticated()
                 .antMatchers("/api/user/**").hasRole("ADMIN")
                 .and()
                 .addFilter(new JwtFilter(authenticationManager()));

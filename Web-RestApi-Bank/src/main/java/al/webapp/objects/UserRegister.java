@@ -35,7 +35,7 @@ public class UserRegister {
     private String city;
 
     @NotBlank(message="Providing zip code is mandatory.")
-    @Pattern(regexp ="^[0-9][0-9][0-9][-]?[0-9][0-9][0-9]$" , message="Invalid zip code.")
+    @Pattern(regexp ="^[0-9][0-9][-]?[0-9][0-9][0-9]$" , message="Invalid zip code.")
     private String zip;
     @Digits(integer=9 , fraction=0 , message="Invalid phone number.")
     private String phone;

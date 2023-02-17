@@ -1,6 +1,11 @@
 package al.webapp.objects;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,14 +18,19 @@ public class UserInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    @NotBlank(message = "Providing your name is mandatory.")
+    @Size(max = 50 , message = "Name too long.")
     private String name;
-
+    @NotBlank(message="Providing street is mandatory.")
+    @Size(max = 50 , message = "Name too long.")
     private String street;
-
+    @NotBlank(message="Providing city is mandatory.")
+    @Size(max = 50 , message = "Name too long.")
     private String city;
-
+    @NotBlank(message="Providing zip code is mandatory.")
+    @Pattern(regexp ="^[0-9][0-9][-]?[0-9][0-9][0-9]$" , message="Invalid zip code.")
     private String zip;
-
+    @Digits(integer=9 , fraction=0 , message="Invalid phone number.")
     private String phone;
 
     public Long getId() {

@@ -29,6 +29,14 @@ public class UserController {
         return usersManager.getAllUsers();
     }
 
+    @DeleteMapping("/api/user/delete/{userName}")
+    public ResponseEntity<String> removeUser(@PathVariable("userName") String userName){return usersManager.removeUser(userName); }
+    @PutMapping("/updateUserInfo")
+    public ResponseEntity<String> updateUserInfo(@Valid @RequestBody UserInfo info,Errors errors){return usersManager.changeUserInfo(info,errors); }
+
+    @GetMapping("/loggedUser")
+    public User getLoggedUser(){return usersManager.getLoggedUser(); }
+
     @RequestMapping("/register")
     @PostMapping(consumes = "application/json")
     public ResponseEntity<String> addUser(@Valid @RequestBody UserRegister userRegister, Errors errors){return usersManager.saveUser(userRegister, errors); }
@@ -36,6 +44,5 @@ public class UserController {
     @RequestMapping("/logIn")
     @PostMapping(consumes = "application/json")
     public ResponseEntity<String> loginToken(@RequestBody UserLogIn userLogIn) {return usersManager.loginToken(userLogIn); }
-
 
 }

@@ -43,6 +43,6 @@ public class TransactionController {
     public List<Transaction> transactionHistoryAll(){return transactionsManager.getTransactionHistoryAll(); }
 
     @GetMapping("/history/page/{page}")
-    public List<Transaction> transactionHistoryOfPage(@PathVariable("page") int page){return transactionsManager.getTransactionHistoryOfPage(page); }
+    public List transactionHistoryOfPage(@PathVariable("page") int page){return transactionsManager.getTransactionHistoryOfPage(page); }
 
 }

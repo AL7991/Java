@@ -91,11 +91,12 @@ public class TransactionsManager {
         return listOfTransactions;
     }
 
-    public List<Transaction> getTransactionHistoryOfPage(int page){
+    public List getTransactionHistoryOfPage(int page){
         Account account = loggedUserAccount();
         Pageable pageable = PageRequest.of(page, 5);
-        List<Transaction> listOfTransactions = transactionRepo.findAllByUserAccountIdOrderByIdDesc(account.getAccountNumber(), pageable);
-        return listOfTransactions;
+        Page<Transaction> pages = transactionRepo.findAllByUserAccountIdOrderByIdDesc(account.getAccountNumber(), pageable);
+        List list = List.of(pages.getContent(),pages.getTotalPages());
+        return list;
     }
 
     public Account loggedUserAccount(){
