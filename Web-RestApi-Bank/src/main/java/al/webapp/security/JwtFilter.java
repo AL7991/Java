@@ -27,7 +27,14 @@ public class JwtFilter extends BasicAuthenticationFilter {
         String requestURI = request.getRequestURI();
 
         if(requestURI.equals("/logIn") || requestURI.equals("/register")){
+
             chain.doFilter(request, response);
+
+            return;
+        }
+        if ( request.getMethod().equals("OPTIONS")) {
+            response.addHeader("Access-Control-Allow-Origin","http://localhost:3000");
+            response.addHeader("Access-Control-Allow-Headers", "Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
             return;
         }
 
@@ -62,7 +69,6 @@ public class JwtFilter extends BasicAuthenticationFilter {
         }catch (Exception e){
             throw new ServletException("Wrong key");
         }
-
     }
 
 
