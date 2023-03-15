@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
+
 @RestController
 @RequestMapping("/")
 public class UserController {
@@ -27,6 +29,11 @@ public class UserController {
     @GetMapping("/api/user/all")
     public ResponseEntity<Iterable<User>>  getAllUsers(){
         return usersManager.getAllUsers();
+    }
+
+    @GetMapping("/api/user/all/{page}")
+    public List getAllUsersPages(@PathVariable("page") int page){
+        return usersManager.getAllUsersPages(page);
     }
 
     @DeleteMapping("/api/user/delete/{userName}")

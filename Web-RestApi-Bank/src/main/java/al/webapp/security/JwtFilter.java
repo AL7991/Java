@@ -41,14 +41,18 @@ public class JwtFilter extends BasicAuthenticationFilter {
         String header = request.getHeader("Authorization");
 
         if(header == null || !header.startsWith("Bearer ")){
-            throw new ServletException("Wrong or Empty header");
+            response.setStatus(403);
+            return;
         }
-
+        try {
         UsernamePasswordAuthenticationToken authRequest = getAuthenticationByToken(header);
-
         SecurityContextHolder.getContext().setAuthentication(authRequest);
 
         chain.doFilter(request, response);
+
+        }catch (Exception e){
+            response.setStatus(403);
+        }
 
     }
 

@@ -7,6 +7,9 @@ import al.webapp.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -54,6 +57,13 @@ public class UsersManager {
             return new ResponseEntity<>(users.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    public List getAllUsersPages(int page){
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<User> all = userRepo.findAll(pageable);
+        List list = List.of(all.getContent(),all.getTotalPages());
+        return list;
     }
 
     public ResponseEntity<String> removeUser(String userName){
