@@ -70,6 +70,9 @@ public class TransactionsManager {
     public ResponseEntity<String> doTransfer(Transfer transfer){
         try {
             boolean balance = checkIfHaveCash(transfer.getAmount());
+            if(transfer.getAmount().compareTo(BigDecimal.ZERO) < 0){
+                return new ResponseEntity<>("Amount must be greater than 0.", HttpStatus.NOT_ACCEPTABLE);
+            }
             if(balance){
                 try{
                     saveTransfer(transfer.getAccountReciverId(), transfer.getAmount());
@@ -78,7 +81,7 @@ public class TransactionsManager {
                     return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
                 }
             }else{
-                return new ResponseEntity<>("The amount exceeds the balance of the account.", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("The amount exceeds the balance of the account.", HttpStatus.NOT_ACCEPTABLE);
             }
         } catch (WrongAccountNumberException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

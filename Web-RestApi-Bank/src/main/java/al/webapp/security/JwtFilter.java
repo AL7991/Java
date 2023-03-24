@@ -34,6 +34,7 @@ public class JwtFilter extends BasicAuthenticationFilter {
         }
         if ( request.getMethod().equals("OPTIONS")) {
             response.addHeader("Access-Control-Allow-Origin","http://localhost:3000");
+            response.addHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
             response.addHeader("Access-Control-Allow-Headers", "Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
             return;
         }

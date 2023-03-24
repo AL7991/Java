@@ -31,10 +31,14 @@ public class CreditManager {
 
         Account account = transactionsManager.loggedUserAccount();
 
+        if(amount.compareTo(BigDecimal.ZERO) < 0){
+            return new ResponseEntity<>("Wrong amount", HttpStatus.NOT_ACCEPTABLE);
+        }
+
         if(account.ifAlreadyHaveCredit()){
             return new ResponseEntity<>("You have to pay off the loan to take another one.", HttpStatus.NOT_ACCEPTABLE);
         }else{
-            if(amount.compareTo(maxAmountOfCredit) <= 0){
+            if(amount.compareTo(maxAmountOfCredit) <= 0 ){
                 account.setAmountOfMoney(account.getAmountOfMoney().add(amount));
                 account.setAmountOfCredit(amount);
                 account.setAlreadyHaveCredit(true);
@@ -72,6 +76,11 @@ public class CreditManager {
                     }
                 case PARTPAYMENT:
                     if(account.getAmountOfMoney().compareTo(amount) >= 0){
+
+                        if(amount.compareTo(BigDecimal.ZERO) < 0){
+                            return new ResponseEntity<>("Wrong amount", HttpStatus.NOT_ACCEPTABLE);
+                        }
+
                         if(account.getAmountOfCredit().compareTo(amount) > 0){
                             account.setAmountOfMoney(account.getAmountOfMoney().subtract(amount));
                             account.setAmountOfCredit(account.getAmountOfCredit().subtract(amount));
