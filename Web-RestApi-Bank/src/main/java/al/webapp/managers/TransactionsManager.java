@@ -10,7 +10,9 @@ import al.webapp.repository.AccountRepository;
 import al.webapp.repository.TransactionRepository;
 import al.webapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -90,15 +92,22 @@ public class TransactionsManager {
 
     public List<Transaction> getTransactionHistoryAll(){
         Account account = loggedUserAccount();
-        List<Transaction> listOfTransactions = transactionRepo.findAllByUserAccountIdOrderByIdDesc(account.getAccountNumber());
+        List<Transaction> listOfTransactions = account.getTransactionHistory();
+        Collections.reverse(listOfTransactions);
+
         return listOfTransactions;
     }
 
     public List getTransactionHistoryOfPage(int page){
         Account account = loggedUserAccount();
-        Pageable pageable = PageRequest.of(page, 5);
-        Page<Transaction> pages = transactionRepo.findAllByUserAccountIdOrderByIdDesc(account.getAccountNumber(), pageable);
-        List list = List.of(pages.getContent(),pages.getTotalPages());
+        Collections.reverse(account.getTransactionHistory());
+
+        PagedListHolder pages = new PagedListHolder(account.getTransactionHistory());
+        pages.setPageSize(5);
+        pages.setPage(page);
+
+        List list = List.of(pages.getPageList(),pages.getPageCount());
+
         return list;
     }
 

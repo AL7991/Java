@@ -10,7 +10,5 @@ import java.util.List;
 
 @Repository
 public interface TransactionRepository extends CrudRepository<Transaction, Long> {
-    List<Transaction> findAllByUserAccountIdOrderByIdDesc(Long id);
-    Page<Transaction> findAllByUserAccountIdOrderByIdDesc(Long id, Pageable pageable);
 
 }
